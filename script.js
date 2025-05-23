@@ -42,14 +42,15 @@ document.addEventListener("DOMContentLoaded", function () {
     produtosContainer.innerHTML = '<h3>Produtos Recomendados</h3>';
     produtos.forEach(p => {
       produtosContainer.innerHTML += `
-        <div class="produto">
-          <img src="\${p.img_thumbnail}" width="100">
-          <div class="produto-info">
-            <strong>\${p.name}</strong>
-            <span>\${p.description}</span>
-            <a href="\${p.url}" target="_blank">Ver Produto</a>
-          </div>
-        </div>`;
+  <div class="produto">
+    <img src="${p.img_thumbnail}" width="100">
+    <div class="produto-info">
+      <strong>${p.name}</strong>
+      <span>${p.description}</span>
+      <a href="${p.url}" target="_blank">Ver Produto</a>
+    </div>
+  </div>`;
+
     });
   }
 });
