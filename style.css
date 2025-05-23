@@ -1,0 +1,94 @@
+
+body {
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: #f4f6f8;
+  color: #333;
+  padding: 40px;
+  max-width: 900px;
+  margin: auto;
+}
+h2 {
+  text-align: center;
+  color: #005ea8;
+  margin-bottom: 30px;
+}
+form {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: 600;
+}
+select, input[type="checkbox"], button {
+  margin-top: 8px;
+  font-size: 16px;
+}
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+input[type="checkbox"] {
+  margin-right: 8px;
+}
+button {
+  margin-top: 20px;
+  background: #005ea8;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+button:hover {
+  background: #004b8c;
+}
+#produtos {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.produto {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 16px 0;
+}
+.produto img {
+  border-radius: 6px;
+}
+.produto:last-child {
+  border-bottom: none;
+}
+.produto-info {
+  flex: 1;
+}
+.produto-info strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #005ea8;
+}
+.produto-info span {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+}
+.produto-info a {
+  color: #0072c6;
+  text-decoration: none;
+  font-weight: 600;
+}
+.produto-info a:hover {
+  text-decoration: underline;
+}

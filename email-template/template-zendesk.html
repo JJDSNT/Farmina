@@ -1,0 +1,60 @@
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;">
+  {% if ticket.ticket_field_19408507869709 == "Dog" %}
+    <img src="https://www.farmina.com/images/email-2022/dog-header.png" alt="Cachorro" style="max-width: 100%; height: auto;" />
+  {% elsif ticket.ticket_field_19408507869709 == "Gato" %}
+    <img src="https://www.farmina.com/images/email-2022/cat-header.png" alt="Gato" style="max-width: 100%; height: auto;" />
+  {% else %}
+    <img src="https://www.farmina.com/images/email-2022/logo-Farmina.png" alt="Farmina" style="max-width: 100%; height: auto;" />
+  {% endif %}
+</p>
+
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: auto;">&nbsp;</p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;"> </p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: auto;"> </p>
+<h3 style="margin-left:0;">Hi {{ticket.requester.first_name}},</h3>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"><span style="color:#000000;">We’re reaching out from the Farmina Pet Health Coach Team to follow up on the personalized food recommendation you received from {{ticket.ticket_field_34060674472461}}, a certified Farmina Genius Center!</span></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"> </p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"><span style="color:#000000;">Based on your {{ticket.ticket_field_19408507869709}}'s unique needs, {{ticket.ticket_field_34060674472461}} recommended:</span><br /><span style="color:#000000;"><strong>{{ticket.ticket_field_34068936102669}}</strong></span></p>
+<h3><span style="color:#000000;"><strong>Save In-Store Today</strong></span></h3>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"><span style="color:#000000;">Redeem your exclusive Genius Center coupon at checkout in-store:</span><br /><a href="{{ticket.ticket_field_34060757831821}}" style="text-decoration: none;" target="_blank"><span style="color:hsl(204,62%,34%);"><strong>Claim Your Discount</strong></span></a></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"> </p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"><span style="color:#000000;">Our Farmina Pet Health Coaches are here for you &mdash; ready to answer questions and provide ongoing nutrition support!</span></p>
+<h3><span style="color:#000000;"><strong>Why Feed Farmina N&amp;D?</strong></span></h3>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"><span style="color:#000000;">A happy life starts with what’s in the bowl! Choosing this trusted diet supports digestion, energy levels, and helps your {{ticket.ticket_field_19408507869709}} live their best life.</span></p>
+<ul>
+    <li><span style="color:#000000;"><strong>Natural, Regionally Sourced Ingredients</strong>: No GMOs or artificial preservatives — just high-quality, wholesome food.</span></li>
+    <li><span style="color:#000000;"><strong>Science-Backed Nutrition</strong>: Our diets are formulated through decades of research with veterinarians and pet nutritionists.</span></li>
+    <li><span style="color:#000000;"><strong>Loved by Pets and Recommended by Vets</strong>: Delicious, effective, and made for your pet’s unique needs.</span><br /> </li>
+</ul>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"><span style="color:#000000;">Best,</span></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"><br /><span style="color:#000000;">The Farmina Pet Health Coach Team</span></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5;"> </p>
+
+<div style="text-align: center;">
+<div style="border: 2px solid #d00000; padding: 20px; min-width:480px; max-width:600px; margin: 20px auto; display: inline-block; text-align: center;">
+
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;"><span style="color:#005ea8!important;"><strong>{{ ticket.requester.name }}, {{dc.fourth_greeting}}</strong></span></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;"><img style="width:11.39pt;" src="https://www.farmina.com/images/email-2022/Icon-feather-phone.png" /><span style="color:#000!important;">Phone:<strong>{{dc.phone_template_email}}</strong></span></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;"><img style="width:11.39pt;" src="https://geniuspet.zendesk.com/hc/theming_assets/01JFWHCJFPY2WHVQS7F9R7JGDT" /><a href="{{dc.whatsapp_link_template_email}}" style="text-decoration: none;" target="_blank"><span style="color:#000!important;">WhatsApp:</span><span style="color:#06402B;"><strong>{{dc.whatsapp_template_email}}</strong></span></a></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;"><img style="width:11.39pt;" src="https://www.farmina.com/images/email-2022/Icon-feather-message-circle.png" /><a href="mailto:{{dc.email_template_email}}" style="text-decoration: none;" target="_blank"><span style="color:#000!important;">Email:<strong>{{dc.email_template_email}}</strong></span></a></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;"><a href="{% if ticket.assignee.custom_fields.link_do_calendly %}{{ ticket.assignee.custom_fields.link_do_calendly }}{% else %}{{dc.calendly_template_email}}{% endif %}" style="text-decoration: none;" target="_blank"><strong>{{dc.template_button_calendly}}</strong></a></p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;"><a href="{{dc.link_button_bot_ia}}" style="text-decoration: none;" target="_blank"><strong>{{dc.chatbot_template_email}}</strong></a></p>
+
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: auto;"> </p>
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: auto;"> </p>
+
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: 0; text-align: center;">
+  <img style="width:69.59pt;" src="https://www.farmina.com/images/email-2022/genius-footer.png" alt="Genius Icon" />
+</p>
+
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: auto;"> </p>
+
+</div>
+</div>
+  
+<div style="text-align: center; line-height: 1.5;">
+  <img style="width:22.19pt; margin: 0 8px;" src="https://www.farmina.com/images/email-2022/icon-facebook.png" alt="Facebook" />
+  <img style="width:22.19pt; margin: 0 8px;" src="https://www.farmina.com/images/email-2022/icon-instagram.png" alt="Instagram" />
+</div>
+
+<p style="margin-top: 0; margin-bottom: 0; line-height: 1.5; margin-left: auto;"> </p>

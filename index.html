@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Produto Farmina</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h2>Simulador de Produto - Farmina Genius</h2>
+    <form id="form-simulador">
+        <label>Tipo de Pet:
+            <select name="type" required>
+                <option value="dog">Cão</option>
+                <option value="cat">Gato</option>
+            </select>
+        </label>
+
+        <label>Tipo de Alimento:
+            <select name="productType">
+                <option value="dry">Seco</option>
+                <option value="wet">Molhado</option>
+            </select>
+        </label>
+
+        <label>Fase da Vida:
+            <select name="lifeStage">
+                <option value="puppy">Filhote</option>
+                <option value="adult">Adulto</option>
+                <option value="senior">Sênior</option>
+            </select>
+        </label>
+
+        <label><input type="checkbox" name="gestation"> Gestação</label>
+        <label><input type="checkbox" name="lactation"> Lactação</label>
+
+        <fieldset style="margin-top: 20px;">
+            <legend><strong>Cuidados Especiais:</strong></legend>
+            <label><input type="checkbox" name="specialcares" value="1"> Controle de Peso</label><br>
+            <label><input type="checkbox" name="specialcares" value="2"> Pele Sensível</label><br>
+            <label><input type="checkbox" name="specialcares" value="3"> Suporte Renal</label>
+        </fieldset>
+
+
+        <label>Endpoint da API:
+            <input type="text" id="api-endpoint" placeholder="https://..." style="width: 100%;" />
+        </label>
+
+        <label><input type="checkbox" id="use-mock"> Usar dados simulados (mock)</label>
+
+        <button type="submit">Buscar Produtos</button>
+    </form>
+
+    <div id="produtos" style="display: none;"></div>
+
+    <script src="config.js"></script>
+    <script src="mock.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
