@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadSpecialCares() {
     specialcaresFieldset.innerHTML = `<legend><strong>Cuidados Especiais:</strong></legend>`;
     const species = petTypeSelect.value;
-    const type = "";
+    //const type = "specialcare";
     const languageId = languageSelect.value;
 
     try {
