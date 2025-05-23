@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const useMockCheckbox = document.getElementById("use-mock");
   const produtosContainer = document.getElementById("produtos");
 
-  document.getElementById('form-simulador').addEventListener('submit', function(e) {
+  document.getElementById('form-simulador').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const useMock = useMockCheckbox?.checked;
@@ -18,8 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
           return res.json();
         })
         .then(data => {
-          if (Array.isArray(data) && data.length > 0) {
-            renderProdutos(data);
+          const produtos = data?.result?.products
+            ? Object.values(data.result.products)
+            : [];
+
+          if (produtos.length > 0) {
+            renderProdutos(produtos);
           } else {
             produtosContainer.style.display = "none";
             alert("Nenhum produto encontrado.");
@@ -43,14 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
     produtos.forEach(p => {
       produtosContainer.innerHTML += `
   <div class="produto">
-    <img src="${p.img_thumbnail}" width="100">
+    <img src="\${p.img_thumbnail}" width="100">
     <div class="produto-info">
-      <strong>${p.name}</strong>
-      <span>${p.description}</span>
-      <a href="${p.url}" target="_blank">Ver Produto</a>
+      <strong>\${p.name}</strong>
+      <span>\${p.description}</span>
+      <a href="\${p.url}" target="_blank">Ver Produto</a>
     </div>
   </div>`;
-
     });
   }
 });
