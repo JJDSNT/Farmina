@@ -1,36 +1,37 @@
-// pages/api/specialcares.js
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const country = process.env.COUNTRY || 'MA';
+  const API_ENDPOINT = process.env.SPECIALCARES_ENDPOINT;
+  const country = process.env.COUNTRY;
   const username = process.env.AUTH_USER;
   const password = process.env.AUTH_PASS;
 
-  const payload = await req.json();
+  let { species, languageId, type } = req.body || {};
 
-  const body = {
-    country,
-    species: payload.species || 'dog',
-    languageId: "1",
-    type: payload.type || 'dietetic'
+  // Preencher com os padrões do backend se não vierem
+  const payload = {
+    ...(species ? { species } : {}),
+    ...(country ? { country } : {}),
+    ...(languageId ? { languageId } : {}),
+    ...(type ? { type } : {}),
   };
 
   try {
-    const response = await fetch('https://gw-c.petgenius.info/wfservice/z1/specialcares/list', {
+    const response = await fetch(API_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Authorization': 'Basic ' + Buffer.from(username + ":" + password).toString('base64'),
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + Buffer.from(`${username}:${password}`).toString("base64"),
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(payload),
     });
 
     const data = await response.json();
-    return res.status(200).json(data);
+
+    res.status(200).json(data);
   } catch (err) {
-    return res.status(500).json({ message: 'Erro ao consultar specialcares', error: err.message });
+    res.status(500).json({ error: "Erro ao consultar specialcares", details: err.message });
   }
 }
