@@ -9,10 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     specialcaresFieldset.innerHTML = `<legend><strong>Cuidados Especiais:</strong></legend>`;
     
     const species = petTypeSelect.value;
-    const type = "dietetic"; // ✅ Corrigido: deve ser "dietetic"
+    const type = "dietetic";
     const languageId = languageSelect.value;
-    
-    console.log("Enviando para API:", { species, type, languageId }); // Debug
     
     try {
       const res = await fetch("/api/specialcares", {
@@ -22,31 +20,22 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       
       const data = await res.json();
-      console.log("Resposta da API:", data); // Debug
+      console.log("Resposta da API:", data);
       
-      // ✅ Estrutura correta baseada na sua resposta
-      if (data.status === "200" && data.result?.[0]?.specialcares?.length > 0) {
-        const specialcares = data.result[0].specialcares;
-        console.log("Specialcares encontrados:", specialcares); // Debug
+      // ✅ Estrutura correta: data.result[0].specialcares[0].list
+      if (data.status === "200" && 
+          data.result?.[0]?.specialcares?.[0]?.list?.length > 0) {
         
-        // Verificar estrutura do primeiro item
-        if (specialcares.length > 0) {
-          console.log("Primeiro item:", specialcares[0]);
-          console.log("Propriedades disponíveis:", Object.keys(specialcares[0]));
-        }
+        const specialcaresList = data.result[0].specialcares[0].list;
+        console.log("Lista de specialcares:", specialcaresList);
         
-        specialcares.forEach(item => {
+        specialcaresList.forEach(item => {
           const label = document.createElement("label");
-          // Usando diferentes possibilidades de nome da propriedade
-          const id = item.specialcare_id || item.id || item.code || '';
-          const name = item.specialcare_name || item.name || item.description || item.title || 'Sem nome';
-          
-          label.innerHTML = `<input type="checkbox" name="specialcares" value="${id}"> ${name}`;
+          label.innerHTML = `<input type="checkbox" name="specialcares" value="${item.specialcare_id}"> ${item.specialcare_name}`;
           specialcaresFieldset.appendChild(label);
           specialcaresFieldset.appendChild(document.createElement("br"));
         });
       } else {
-        console.log("Nenhum specialcare encontrado ou estrutura inesperada");
         specialcaresFieldset.innerHTML += "<span style='color:#888'>Nenhum cuidado especial disponível.</span>";
       }
     } catch (err) {
