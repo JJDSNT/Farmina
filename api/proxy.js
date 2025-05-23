@@ -1,12 +1,14 @@
+
 export default async function handler(req, res) {
   const endpoint = process.env.API_ENDPOINT;
   const username = process.env.AUTH_USER;
   const password = process.env.AUTH_PASS;
+  const country = process.env.COUNTRY;
 
-  if (!endpoint || !username || !password) {
-    return res.status(500).json({ error: "Variáveis de ambiente não configuradas." });
+  if (!endpoint || !username || !password || !country) {
+    return res.status(500).json({ error: "Variáveis de ambiente não configuradas corretamente." });
   }
-
+  
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Método não permitido. Use GET." });
   }
@@ -30,10 +32,11 @@ export default async function handler(req, res) {
     lactation: lactation === "true",
     specialcares: specialcares
       ? specialcares.split(",").map(s => parseInt(s)).filter(n => !isNaN(n))
-      : []
+      : [],
+    country
   };
 
-  try {
+ try {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -44,7 +47,8 @@ export default async function handler(req, res) {
     });
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: "Erro da API externa." });
+      const text = await response.text();
+      return res.status(response.status).json({ error: "Erro da API externa.", details: text });
     }
 
     const data = await response.json();
