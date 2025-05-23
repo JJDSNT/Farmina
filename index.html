@@ -8,7 +8,79 @@
 </head>
 
 <body>
-    <h2>Simulador de Produto - Farmina Genius</h2>
+    <h2>Simulador de Produto - Farmina Genius</h2><!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Simulador de Produto Farmina</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h2>Simulador de Produto <span class="brand">Farmina Genius</span></h2>
+    <form id="form-simulador" autocomplete="off">
+      <div class="grid-form">
+        <label>
+          Tipo de Pet
+          <select name="type" id="pet-type" required>
+            <option value="dog">Cão</option>
+            <option value="cat">Gato</option>
+          </select>
+        </label>
+        <label>
+          Tipo de Alimento
+          <select name="productType" id="product-type">
+            <option value="dry">Seco</option>
+            <option value="wet">Molhado</option>
+          </select>
+        </label>
+        <label>
+          Fase da Vida
+          <select name="lifeStage" id="life-stage">
+            <option value="puppy">Filhote</option>
+            <option value="adult">Adulto</option>
+            <option value="senior">Sênior</option>
+          </select>
+        </label>
+        <label>
+          Idioma
+          <select name="languageId" id="language-id">
+            <option value="1">Português</option>
+            <option value="2">English</option>
+            <option value="3">Español</option>
+            <!-- Ajuste os valores conforme a API -->
+          </select>
+        </label>
+        <label>
+          Tipo de Produto
+          <select name="careType" id="care-type">
+            <option value="maintenance">Manutenção</option>
+            <option value="dietetic">Dieta terapêutica</option>
+            <option value="specialcare">Cuidados especiais</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="grid-checkboxes">
+        <label><input type="checkbox" name="gestation"> Gestação</label>
+        <label><input type="checkbox" name="lactation"> Lactação</label>
+      </div>
+
+      <fieldset id="specialcares-fieldset" class="specialcares">
+        <legend><strong>Cuidados Especiais:</strong></legend>
+        <div id="specialcares-list">Carregando opções...</div>
+      </fieldset>
+
+      <button type="submit">Buscar Produtos</button>
+    </form>
+
+    <section id="produtos" style="display:none;"></section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
+
     <form id="form-simulador">
         <label>Tipo de Pet:
             <select name="type" required>
