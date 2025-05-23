@@ -1,129 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Simulador de Produto Farmina</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <h2>Simulador de Produto - Farmina Genius</h2><!DOCTYPE html>
-<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Simulador de Produto Farmina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
-    <h2>Simulador de Produto <span class="brand">Farmina Genius</span></h2>
-    <form id="form-simulador" autocomplete="off">
-      <div class="grid-form">
-        <label>
-          Tipo de Pet
-          <select name="type" id="pet-type" required>
+    <h2>Simulador de Produto - Farmina Genius</h2>
+    <form id="form-simulador">
+      <div class="field-group">
+        <label>Idioma:
+          <select id="language-id" name="languageId">
+            <option value="1" selected>Português</option>
+            <option value="2">English</option>
+          </select>
+        </label>
+        <label>Tipo de Pet:
+          <select name="type" required>
             <option value="dog">Cão</option>
             <option value="cat">Gato</option>
           </select>
         </label>
-        <label>
-          Tipo de Alimento
-          <select name="productType" id="product-type">
+        <label>Tipo de Alimento:
+          <select name="productType">
             <option value="dry">Seco</option>
             <option value="wet">Molhado</option>
           </select>
         </label>
-        <label>
-          Fase da Vida
-          <select name="lifeStage" id="life-stage">
+        <label>Fase da Vida:
+          <select name="lifeStage">
             <option value="puppy">Filhote</option>
             <option value="adult">Adulto</option>
             <option value="senior">Sênior</option>
           </select>
         </label>
-        <label>
-          Idioma
-          <select name="languageId" id="language-id">
-            <option value="1">Português</option>
-            <option value="2">English</option>
-            <option value="3">Español</option>
-            <!-- Ajuste os valores conforme a API -->
-          </select>
-        </label>
-        <label>
-          Tipo de Produto
-          <select name="careType" id="care-type">
-            <option value="maintenance">Manutenção</option>
-            <option value="dietetic">Dieta terapêutica</option>
-            <option value="specialcare">Cuidados especiais</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="grid-checkboxes">
         <label><input type="checkbox" name="gestation"> Gestação</label>
         <label><input type="checkbox" name="lactation"> Lactação</label>
       </div>
-
-      <fieldset id="specialcares-fieldset" class="specialcares">
+      <fieldset id="specialcares-fieldset" style="margin-top: 18px;">
         <legend><strong>Cuidados Especiais:</strong></legend>
-        <div id="specialcares-list">Carregando opções...</div>
+        <!-- Opções dinâmicas -->
       </fieldset>
-
       <button type="submit">Buscar Produtos</button>
     </form>
-
-    <section id="produtos" style="display:none;"></section>
+    <section id="produtos" style="display: none;"></section>
   </main>
   <script src="script.js"></script>
 </body>
-</html>
-
-    <form id="form-simulador">
-        <label>Tipo de Pet:
-            <select name="type" required>
-                <option value="dog">Cão</option>
-                <option value="cat">Gato</option>
-            </select>
-        </label>
-
-        <label>Tipo de Alimento:
-            <select name="productType">
-                <option value="dry">Seco</option>
-                <option value="wet">Molhado</option>
-            </select>
-        </label>
-
-        <label>Fase da Vida:
-            <select name="lifeStage">
-                <option value="puppy">Filhote</option>
-                <option value="adult">Adulto</option>
-                <option value="senior">Sênior</option>
-            </select>
-        </label>
-
-        <label><input type="checkbox" name="gestation"> Gestação</label>
-        <label><input type="checkbox" name="lactation"> Lactação</label>
-
-        <fieldset style="margin-top: 20px;">
-            <legend><strong>Cuidados Especiais:</strong></legend>
-            <label><input type="checkbox" name="specialcares" value="1"> Controle de Peso</label><br>
-            <label><input type="checkbox" name="specialcares" value="2"> Pele Sensível</label><br>
-            <label><input type="checkbox" name="specialcares" value="3"> Suporte Renal</label>
-        </fieldset>
-
-        <label><input type="checkbox" id="use-mock"> Usar dados simulados (mock)</label>
-
-        <button type="submit">Buscar Produtos</button>
-    </form>
-
-    <div id="produtos" style="display: none;"></div>
-
-
-    <script src="mock.js"></script>
-    <script src="script.js"></script>
-</body>
-
 </html>
