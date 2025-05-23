@@ -18,6 +18,7 @@ export default async function handler(req, res) {
     ...(type ? { type } : {}),
   };
 
+  console.log("Payload enviado para Specialcares:", payload);
   try {
     const response = await fetch(API_ENDPOINT, {
       method: 'POST',
@@ -29,6 +30,7 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+    console.log("Resposta da API Specialcares:", data);
 
     res.status(200).json(data);
   } catch (err) {
