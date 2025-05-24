@@ -1,15 +1,27 @@
-
 // api/products.js
 
 import { getCountry, getLanguageId, fetchFarminaApi } from "@/lib/farmina";
 
 export default async function handler(req, res) {
-  if (req.method !== "GET" && req.method !== "POST")
+  if (req.method !== "POST")
     return res.status(405).json({ error: "Método não permitido." });
 
   try {
-    const { type, productType, lifeStage, gestation = false, lactation = false, specialcares = "" } =
-      req.method === "GET" ? req.query : req.body || {};
+    // Recebe todos os campos do formulário
+    const {
+      type,
+      productType,
+      lifeStage,
+      gestation = false,
+      lactation = false,
+      specialcares = []
+    } = req.body || {};
+
+    const specialcaresArray = Array.isArray(specialcares)
+      ? specialcares.map(Number).filter(n => !isNaN(n))
+      : typeof specialcares === "string" && specialcares
+        ? [Number(specialcares)].filter(n => !isNaN(n))
+        : [];
 
     const payload = {
       type,
@@ -17,9 +29,7 @@ export default async function handler(req, res) {
       lifeStage,
       gestation: gestation === "true" || gestation === true,
       lactation: lactation === "true" || lactation === true,
-      specialcares: (typeof specialcares === "string" && specialcares)
-        ? specialcares.split(",").map(Number).filter(n => !isNaN(n))
-        : [],
+      specialcares: specialcaresArray,
       country: getCountry(),
       languageId: getLanguageId(req),
     };
