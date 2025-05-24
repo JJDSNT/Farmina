@@ -54,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Converte para objeto, garantindo specialcares como array
     const data = Object.fromEntries(formData.entries());
     data.specialcares = formData.getAll("specialcares");
+    
+    console.log("Enviando para /api/products:", data);
 
     fetch("/api/products", {
       method: "POST",
