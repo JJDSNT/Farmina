@@ -1,44 +1,76 @@
 // api/products.js
 
-import { getCountry, getLanguageId, fetchFarminaApi } from "@/lib/farmina";
-
 export default async function handler(req, res) {
-  if (req.method !== "POST")
-    return res.status(405).json({ error: "Método não permitido." });
+  const endpoint = process.env.API_ENDPOINT;
+  const username = process.env.AUTH_USER;
+  const password = process.env.AUTH_PASS;
+  const country = process.env.COUNTRY;
 
-  try {
-    // Recebe todos os campos do formulário
-    const {
-      type,
-      productType,
-      lifeStage,
-      gestation = false,
-      lactation = false,
-      specialcares = []
-    } = req.body || {};
+  if (!endpoint || !username || !password || !country) {
+    return res.status(500).json({ error: "Variáveis de ambiente não configuradas corretamente." });
+  }
 
-    const specialcaresArray = Array.isArray(specialcares)
+  // Aceita GET (query) e POST (body) para flexibilidade
+  let params = {};
+  if (req.method === "GET") {
+    params = req.query || {};
+  } else if (req.method === "POST") {
+    params = req.body || {};
+  } else {
+    return res.status(405).json({ error: "Método não permitido. Use GET ou POST." });
+  }
+
+  // Coleta campos do request (ou use defaults se quiser)
+  const {
+    type,
+    productType,
+    lifeStage,
+    gestation = false,
+    lactation = false,
+    specialcares = "",
+    languageId
+  } = params;
+
+  // Trata specialcares para garantir array numérico
+  const specialcaresArray =
+    Array.isArray(specialcares)
       ? specialcares.map(Number).filter(n => !isNaN(n))
       : typeof specialcares === "string" && specialcares
-        ? [Number(specialcares)].filter(n => !isNaN(n))
+        ? specialcares.split(",").map(Number).filter(n => !isNaN(n))
         : [];
 
-    const payload = {
-      type,
-      productType,
-      lifeStage,
-      gestation: gestation === "true" || gestation === true,
-      lactation: lactation === "true" || lactation === true,
-      specialcares: specialcaresArray,
-      country: getCountry(),
-      languageId: getLanguageId(req),
-    };
+  const payload = {
+    type,
+    productType,
+    lifeStage,
+    gestation: gestation === "true" || gestation === true,
+    lactation: lactation === "true" || lactation === true,
+    specialcares: specialcaresArray,
+    country,
+    languageId: languageId || process.env.LANGUAGE_ID // usa o do env se não vier da requisição
+  };
 
-    const endpoint = process.env.API_ENDPOINT;
-    const data = await fetchFarminaApi({ endpoint, payload });
+  const authHeader = "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
 
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Authorization: authHeader,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      return res.status(response.status).json({ error: "Erro da API externa.", details: text });
+    }
+
+    const data = await response.json();
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Erro no proxy:", err);
+    res.status(500).json({ error: "Erro interno no proxy." });
   }
 }
