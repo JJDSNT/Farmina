@@ -1,6 +1,6 @@
 // api/specialcares.js
 
-import { getCountry, getLanguageId, fetchFarminaApi } from "@/lib/farmina";
+const { getCountry, getLanguageId, fetchFarminaApi } = require("../lib/farmina");
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
