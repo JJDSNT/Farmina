@@ -19,6 +19,7 @@ export default async function handler(req, res) {
   } else {
     return res.status(405).json({ error: "Método não permitido. Use GET ou POST." });
   }
+console.log("Recebido do frontend:", req.body);
 
   // Coleta campos do request (ou use defaults se quiser)
   const {
@@ -50,6 +51,8 @@ export default async function handler(req, res) {
     languageId: languageId || process.env.LANGUAGE_ID // usa o do env se não vier da requisição
   };
 
+  console.log("Payload montado para API externa:", payload);
+
   const authHeader = "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
 
   try {
@@ -68,6 +71,8 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
+    console.log("Resposta da API externa:", data);
+
     res.status(200).json(data);
   } catch (err) {
     console.error("Erro no proxy:", err);
