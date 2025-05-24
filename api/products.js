@@ -72,6 +72,8 @@ console.log("Recebido do frontend:", req.body);
 
     const data = await response.json();
     console.log("Resposta da API externa:", data);
+    console.log("Primeiro produto retornado:", JSON.stringify(data.result.products["63"] || Object.values(data.result.products)[0], null, 2));
+
 
     res.status(200).json(data);
   } catch (err) {
