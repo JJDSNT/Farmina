@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const languageId = languageSelect.value;
 
     try {
+      console.log("Enviando para /api/specialcares:", { species, type, languageId });
+
       const res = await fetch("/api/specialcares", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
