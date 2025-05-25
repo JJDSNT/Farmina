@@ -13,6 +13,16 @@ document.addEventListener("DOMContentLoaded", function () {
     legendTypeSpan.textContent = value ? `(${selectedOption.text})` : '';
   }
 
+  // Função para decidir o languageId de acordo com o endpoint e select
+  function getLanguageId(endpoint) {
+    const selected = languageSelect.value;
+    if (selected === 'briefing-default') {
+      if (endpoint === 'products') return 20;
+      if (endpoint === 'specialcares') return 1;
+    }
+    return selected;
+  }
+
   // Função para carregar cuidados especiais
   async function loadSpecialCares() {
     // Atualiza legenda com type selecionado
@@ -23,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const species = petTypeSelect.value;
     const type = careTypeSelect.value; // Agora vem do select!
-    const languageId = languageSelect.value;
+    const languageId = getLanguageId('specialcares'); // Usando função nova
 
     try {
       console.log("Enviando para /api/specialcares:", { species, type, languageId });
@@ -69,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Converte para objeto, garantindo specialcares como array
     const data = Object.fromEntries(formData.entries());
     data.specialcares = formData.getAll("specialcares");
+
+    // Sobrescreve languageId conforme regra briefing-default
+    data.languageId = getLanguageId('products');
 
     console.log("Enviando para /api/products:", data);
 
