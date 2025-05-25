@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const languageSelect = document.getElementById("language-id");
   const careTypeSelect = document.getElementById("care-type");
   const legendTypeSpan = document.getElementById("legend-type");
+  // Não há select de país no HTML atual
 
   // Função para atualizar o texto do type na legenda
   function updateLegendType() {
@@ -23,25 +24,31 @@ document.addEventListener("DOMContentLoaded", function () {
     return selected;
   }
 
+  // Função para obter o país selecionado
+  function getCountry() {
+    // Como não há select de país no HTML, retorna undefined
+    // para usar o valor do process.env.COUNTRY na API
+    return undefined;
+  }
+
   // Função para carregar cuidados especiais
   async function loadSpecialCares() {
-    // Atualiza legenda com type selecionado
     updateLegendType();
-
-    // Remove tudo que não seja a legend, preservando ela
     specialcaresFieldset.innerHTML = `<legend><strong>Cuidados Especiais: <span id="legend-type">${legendTypeSpan.textContent}</span></strong></legend>`;
 
     const species = petTypeSelect.value;
-    const type = careTypeSelect.value; // Agora vem do select!
-    const languageId = getLanguageId('specialcares'); // Usando função nova
+    const type = careTypeSelect.value;
+    const languageId = getLanguageId('specialcares');
+    const country = getCountry();
 
     try {
-      console.log("Enviando para /api/specialcares:", { species, type, languageId });
+      const payload = { species, type, languageId, country };
+      console.log("Enviando para /api/specialcares:", payload);
 
       const res = await fetch("/api/specialcares", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ species, type, languageId })
+        body: JSON.stringify(payload)
       });
 
       const data = await res.json();
@@ -80,10 +87,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const data = Object.fromEntries(formData.entries());
     data.specialcares = formData.getAll("specialcares");
 
-    // Sobrescreve languageId conforme regra briefing-default
+    // Adiciona languageId e country explicitamente
     data.languageId = getLanguageId('products');
+    data.country = getCountry();
 
-    console.log("Enviando para /api/products:", data);
+    console.log("Dados enviados para /api/products:", data);
+    console.log("- Country:", data.country);
+    console.log("- LanguageId:", data.languageId);
 
     fetch("/api/products", {
       method: "POST",
@@ -94,11 +104,17 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!res.ok) throw new Error("Erro na resposta da API");
         return res.json();
       })
-      .then(data => {
-        const produtos = data?.result?.products
-          ? Object.values(data.result.products)
+      .then(responseData => {
+        console.log("Resposta da API products:", responseData);
+        
+        const produtos = responseData?.result?.products
+          ? Object.values(responseData.result.products)
           : [];
+          
         if (produtos.length > 0) {
+          console.log("Primeiro produto (verificar idioma):");
+          console.log("- Nome:", produtos[0].name);
+          console.log("- Descrição:", produtos[0].description);
           renderProdutos(produtos);
         } else {
           produtosContainer.style.display = "none";
