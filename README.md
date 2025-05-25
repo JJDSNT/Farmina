@@ -57,7 +57,6 @@ Página para agentes simularem as características de um pet (filtros) e consult
 
 - **Web estático** (HTML/CSS/JS puros, responsivo)
 - **Proxy backend** para requisições autenticadas (configuração mínima)
-- **Sem frameworks, sem build, sem Git** (restrições do ambiente)
 
 > **Observação:**  
 > Esta solução foi criada sem acesso a ferramentas modernas de desenvolvimento (Git, Node.js ou frameworks front-end). Todo o código foi escrito em HTML, CSS e JavaScript puro, por restrições do ambiente.
