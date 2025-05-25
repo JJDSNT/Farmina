@@ -68,6 +68,7 @@ Página para agentes simularem as características de um pet (filtros) e consult
 - As APIs utilizadas **não oferecem paginação** de resultados.
 - **Não há cache** local ou de rede; cada busca resulta em uma chamada à API.
 - Apenas um país (“MA”) está disponível como padrão (Farmina Brand).
+- O ideal seria ter a lista de idiomas suportados para cada país.
 
 ---
 
