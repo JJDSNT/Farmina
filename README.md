@@ -26,6 +26,36 @@ Página para agentes simularem as características de um pet (filtros) e consult
 
 ---
 
+## Exemplos de Payloads
+
+> *As chamadas são feitas via backend proxy. Os exemplos abaixo mostram apenas o formato dos dados enviados.*
+
+### Busca de produtos
+
+~~~
+{
+  "country": "MA",
+  "languageId": "20",
+  "productId": "388",
+  "productType": "dry",
+  "type": "",
+  "appsAndEshop": true
+}
+~~~
+
+### Listagem de Cuidados Especiais
+
+~~~
+{
+  "species": "dog",
+  "country": "MA",
+  "languageId": "1",
+  "type": "dietetic"
+}
+~~~
+
+---
+
 ## Implementação
 
 - **Web estático** (HTML/CSS/JS puros, responsivo)
@@ -34,7 +64,14 @@ Página para agentes simularem as características de um pet (filtros) e consult
 
 ---
 
-> **Aviso:**  
-> Este projeto é apenas para demonstração técnica, em ambiente controlado. **Nunca utilize os endpoints, credenciais ou payloads desta solução em produção sem autorização da Farmina.**
+## Limitações conhecidas
+
+- As APIs utilizadas **não oferecem paginação** de resultados.
+- **Não há cache** local ou de rede; cada busca resulta em uma chamada à API.
+- Apenas um país (“MA”) está disponível como padrão (Farmina Brand).
+- A solução é para demonstração técnica, não devendo ser usada em produção sem autorização.
 
 ---
+
+> **Aviso:**  
+> Este projeto é apenas para demonstração técnica, em ambiente controlado. **Nunca utilize os endpoints, credenciais ou payloads desta solução em produção sem autorização da Farmina.**
