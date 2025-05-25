@@ -11,14 +11,14 @@
     <h2>Simulador de Produto<Br />Farmina Genius</h2>
     <form id="form-simulador">
       <div class="field-group">
-<label>Idioma:
-    <select id="language-id" name="languageId">
-        <option value="briefing-default" selected>Default Briefing/MA (Produtos: ID 20 / Cuidados: ID 1)</option>
-        <option value="3">Português/BR (ID 3)</option>
-        <option value="0">English/US (ID 0)</option>
-        <option value="1">Italiano/IT (ID 1)</option>
-        </select>
-</label>
+        <label>Idioma:
+          <select id="language-id" name="languageId">
+            <option value="briefing-default" selected>Default Briefing/MA (Produtos: ID 20 / Cuidados: ID 1)</option>
+            <option value="3">Português/BR (ID 3)</option>
+            <option value="0">English/US (ID 0)</option>
+            <option value="1">Italiano/IT (ID 1)</option>
+          </select>
+        </label>
         <label>Tipo de Pet:
           <select name="type" required>
             <option value="dog">Cão</option>
@@ -38,11 +38,20 @@
             <option value="senior">Sênior</option>
           </select>
         </label>
+        <label>
+          Tipo de Cuidado Especial:
+          <select id="care-type" name="careType">
+            <option value="dietetic">Dietético</option>
+            <option value="supplementary">Suplementar</option>
+            <option value="preventive">Preventivo</option>
+            <option value="">Todos</option>
+          </select>
+        </label>
         <label><input type="checkbox" name="gestation"> Gestação</label>
         <label><input type="checkbox" name="lactation"> Lactação</label>
       </div>
       <fieldset id="specialcares-fieldset" style="margin-top: 18px;">
-        <legend><strong>Cuidados Especiais:</strong></legend>
+        <legend><strong>Cuidados Especiais: <span id="legend-type"></span></strong></legend>
         <!-- Opções dinâmicas -->
       </fieldset>
       <button type="submit">Buscar Produtos</button>
