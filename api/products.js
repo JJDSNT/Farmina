@@ -4,12 +4,6 @@ export default async function handler(req, res) {
   const endpoint = process.env.API_ENDPOINT;
   const username = process.env.AUTH_USER;
   const password = process.env.AUTH_PASS;
-  const country = params.country || process.env.COUNTRY;
-
-
-  if (!endpoint || !username || !password || !country) {
-    return res.status(500).json({ error: "Variáveis de ambiente não configuradas corretamente." });
-  }
 
   // Aceita GET (query) e POST (body) para flexibilidade
   let params = {};
@@ -20,7 +14,7 @@ export default async function handler(req, res) {
   } else {
     return res.status(405).json({ error: "Método não permitido. Use GET ou POST." });
   }
-console.log("Recebido do frontend:", req.body);
+  console.log("Recebido do frontend:", req.body);
 
   // Coleta campos do request (ou use defaults se quiser)
   const {
@@ -30,7 +24,8 @@ console.log("Recebido do frontend:", req.body);
     gestation = false,
     lactation = false,
     specialcares = "",
-    languageId
+    languageId,
+    country: countryFromReq // <-- novo!
   } = params;
 
   // Trata specialcares para garantir array numérico
@@ -40,6 +35,13 @@ console.log("Recebido do frontend:", req.body);
       : typeof specialcares === "string" && specialcares
         ? specialcares.split(",").map(Number).filter(n => !isNaN(n))
         : [];
+
+  // Define country dinâmico, fallback para process.env.COUNTRY
+  const country = countryFromReq || process.env.COUNTRY;
+
+  if (!endpoint || !username || !password || !country) {
+    return res.status(500).json({ error: "Variáveis de ambiente não configuradas corretamente." });
+  }
 
   const payload = {
     type,
@@ -73,8 +75,16 @@ console.log("Recebido do frontend:", req.body);
 
     const data = await response.json();
     console.log("Resposta da API externa:", data);
-    console.log("Primeiro produto retornado:", JSON.stringify(data.result.products["63"] || Object.values(data.result.products)[0], null, 2));
-
+    console.log(
+      "Primeiro produto retornado:",
+      JSON.stringify(
+        data.result?.products
+          ? data.result.products["63"] || Object.values(data.result.products)[0]
+          : null,
+        null,
+        2
+      )
+    );
 
     res.status(200).json(data);
   } catch (err) {
@@ -82,3 +92,4 @@ console.log("Recebido do frontend:", req.body);
     res.status(500).json({ error: "Erro interno no proxy." });
   }
 }
+
