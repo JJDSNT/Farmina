@@ -12,9 +12,6 @@ Página para agentes simularem as características de um pet (filtros) e consult
 - Lista dos cuidados especiais (dinâmicos)
 - Publicar a página para testes
 
-> **Observação:**  
-> Esta solução foi criada sem acesso a ferramentas modernas de desenvolvimento (Git, Node.js ou frameworks front-end). Todo o código foi escrito em HTML, CSS e JavaScript puro, por restrições do ambiente.
-
 ---
 
 ## Funcionalidades
@@ -62,6 +59,9 @@ Página para agentes simularem as características de um pet (filtros) e consult
 - **Proxy backend** para requisições autenticadas (configuração mínima)
 - **Sem frameworks, sem build, sem Git** (restrições do ambiente)
 
+> **Observação:**  
+> Esta solução foi criada sem acesso a ferramentas modernas de desenvolvimento (Git, Node.js ou frameworks front-end). Todo o código foi escrito em HTML, CSS e JavaScript puro, por restrições do ambiente.
+
 ---
 
 ## Limitações conhecidas
@@ -69,7 +69,6 @@ Página para agentes simularem as características de um pet (filtros) e consult
 - As APIs utilizadas **não oferecem paginação** de resultados.
 - **Não há cache** local ou de rede; cada busca resulta em uma chamada à API.
 - Apenas um país (“MA”) está disponível como padrão (Farmina Brand).
-- A solução é para demonstração técnica, não devendo ser usada em produção sem autorização.
 
 ---
 
