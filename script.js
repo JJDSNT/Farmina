@@ -3,13 +3,26 @@ document.addEventListener("DOMContentLoaded", function () {
   const specialcaresFieldset = document.getElementById("specialcares-fieldset");
   const petTypeSelect = document.querySelector('select[name="type"]');
   const languageSelect = document.getElementById("language-id");
+  const careTypeSelect = document.getElementById("care-type");
+  const legendTypeSpan = document.getElementById("legend-type");
+
+  // Função para atualizar o texto do type na legenda
+  function updateLegendType() {
+    const selectedOption = careTypeSelect.options[careTypeSelect.selectedIndex];
+    const value = careTypeSelect.value;
+    legendTypeSpan.textContent = value ? `(${selectedOption.text})` : '';
+  }
 
   // Função para carregar cuidados especiais
   async function loadSpecialCares() {
-    specialcaresFieldset.innerHTML = `<legend><strong>Cuidados Especiais:</strong></legend>`;
+    // Atualiza legenda com type selecionado
+    updateLegendType();
+
+    // Remove tudo que não seja a legend, preservando ela
+    specialcaresFieldset.innerHTML = `<legend><strong>Cuidados Especiais: <span id="legend-type">${legendTypeSpan.textContent}</span></strong></legend>`;
 
     const species = petTypeSelect.value;
-    const type = "dietetic";
+    const type = careTypeSelect.value; // Agora vem do select!
     const languageId = languageSelect.value;
 
     try {
@@ -40,9 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Inicializa
   loadSpecialCares();
   petTypeSelect.addEventListener("change", loadSpecialCares);
   languageSelect.addEventListener("change", loadSpecialCares);
+  careTypeSelect.addEventListener("change", loadSpecialCares);
 
   document.getElementById('form-simulador').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -54,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Converte para objeto, garantindo specialcares como array
     const data = Object.fromEntries(formData.entries());
     data.specialcares = formData.getAll("specialcares");
-    
+
     console.log("Enviando para /api/products:", data);
 
     fetch("/api/products", {
