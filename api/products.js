@@ -4,7 +4,8 @@ export default async function handler(req, res) {
   const endpoint = process.env.API_ENDPOINT;
   const username = process.env.AUTH_USER;
   const password = process.env.AUTH_PASS;
-  const country = process.env.COUNTRY;
+  const country = params.country || process.env.COUNTRY;
+
 
   if (!endpoint || !username || !password || !country) {
     return res.status(500).json({ error: "Variáveis de ambiente não configuradas corretamente." });
