@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     lactation = false,
     specialcares = "",
     languageId,
-    country: countryFromReq // <-- novo!
+    country: countryFromReq
   } = params;
 
   // Trata specialcares para garantir array numérico
