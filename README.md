@@ -13,7 +13,7 @@ Página para agentes simularem as características de um pet (filtros) e consult
 - Publicar a página para testes
 
 > **Observação:**  
-> Esta solução foi criada sem acesso a ferramentas modernas de desenvolvimento (Git, Node.js ou frameworks front-end). Todo o código foi escrito em HTML, CSS e JavaScript puro, visando máxima portabilidade e simplicidade de deploy.
+> Esta solução foi criada sem acesso a ferramentas modernas de desenvolvimento (Git, Node.js ou frameworks front-end). Todo o código foi escrito em HTML, CSS e JavaScript puro, por restrições do ambiente.
 
 ---
 
