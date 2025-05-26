@@ -14,9 +14,10 @@ export default async function handler(req, res) {
   } else {
     return res.status(405).json({ error: "Método não permitido. Use GET ou POST." });
   }
+
   console.log("Recebido do frontend:", req.body);
 
-  // Coleta campos do request (ou use defaults se quiser)
+  // Coleta campos do request (com defaults)
   const {
     type,
     productType,
@@ -25,7 +26,8 @@ export default async function handler(req, res) {
     lactation = false,
     specialcares = "",
     languageId,
-    country: countryFromReq
+    country: countryFromReq,
+    appsAndEshop = true
   } = params;
 
   // Trata specialcares para garantir array numérico
@@ -36,7 +38,7 @@ export default async function handler(req, res) {
         ? specialcares.split(",").map(Number).filter(n => !isNaN(n))
         : [];
 
-  // Define country dinâmico, fallback para process.env.COUNTRY
+  // Define country dinâmico
   const country = countryFromReq || process.env.COUNTRY;
 
   if (!endpoint || !username || !password || !country) {
@@ -47,11 +49,12 @@ export default async function handler(req, res) {
     type,
     productType,
     lifeStage,
-    gestation: gestation === "true" || gestation === true,
-    lactation: lactation === "true" || lactation === true,
+    gestation: ["true", true, "on"].includes(gestation),
+    lactation: ["true", true, "on"].includes(lactation),
     specialcares: specialcaresArray,
     country,
-    languageId: languageId || process.env.LANGUAGE_ID // usa o do env se não vier da requisição
+    languageId: languageId || process.env.LANGUAGE_ID,
+    appsAndEshop
   };
 
   console.log("Payload montado para API externa:", payload);
@@ -92,4 +95,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Erro interno no proxy." });
   }
 }
-
