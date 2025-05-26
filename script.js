@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const languageSelect = document.getElementById("language-id");
   const careTypeSelect = document.getElementById("care-type");
   const legendTypeSpan = document.getElementById("legend-type");
-  // Não há select de país no HTML atual
 
   // Função para atualizar o texto do type na legenda
   function updateLegendType() {
@@ -14,32 +13,32 @@ document.addEventListener("DOMContentLoaded", function () {
     legendTypeSpan.textContent = value ? `(${selectedOption.text})` : '';
   }
 
-  // Função para decidir o languageId de acordo com o endpoint e select
-  function getLanguageId(endpoint) {
-    const selected = languageSelect.value;
-    if (selected === 'briefing-default') {
-      if (endpoint === 'products') return 20;
-      if (endpoint === 'specialcares') return 1;
+  // Função que retorna o par {country, languageId} corretamente para cada endpoint
+  function getCountryAndLanguageId(endpoint) {
+    const langValue = languageSelect.value;
+    // Briefing-default: regra especial
+    if (langValue === 'briefing-default') {
+      return endpoint === 'products'
+        ? { country: "MA", languageId: 20 }
+        : { country: "MA", languageId: 1 };
     }
-    return selected;
-  }
-
-  // Função para obter o país selecionado
-  function getCountry() {
-    // Como não há select de país no HTML, retorna undefined
-    // para usar o valor do process.env.COUNTRY na API
-    return undefined;
+    // Mapeamento explícito
+    if (langValue === "3") return { country: "BR", languageId: 3 };
+    if (langValue === "0") return { country: "US", languageId: 0 };
+    if (langValue === "1") return { country: "IT", languageId: 1 };
+    // fallback (não deve ocorrer)
+    return { country: "MA", languageId: 1 };
   }
 
   // Função para carregar cuidados especiais
   async function loadSpecialCares() {
     updateLegendType();
-    specialcaresFieldset.innerHTML = `<legend><strong>Cuidados Especiais: <span id="legend-type">${legendTypeSpan.textContent}</span></strong></legend>`;
+    specialcaresFieldset.innerHTML =
+      `<legend><strong>Cuidados Especiais: <span id="legend-type">${legendTypeSpan.textContent}</span></strong></legend>`;
 
     const species = petTypeSelect.value;
     const type = careTypeSelect.value;
-    const languageId = getLanguageId('specialcares');
-    const country = getCountry();
+    const { country, languageId } = getCountryAndLanguageId('specialcares');
 
     try {
       const payload = { species, type, languageId, country };
@@ -87,13 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const data = Object.fromEntries(formData.entries());
     data.specialcares = formData.getAll("specialcares");
 
-    // Adiciona languageId e country explicitamente
-    data.languageId = getLanguageId('products');
-    data.country = getCountry();
+    // Usa country/languageId corretos para produtos
+    const { country, languageId } = getCountryAndLanguageId('products');
+    data.country = country;
+    data.languageId = languageId;
 
     console.log("Dados enviados para /api/products:", data);
-    console.log("- Country:", data.country);
-    console.log("- LanguageId:", data.languageId);
 
     fetch("/api/products", {
       method: "POST",
@@ -106,15 +104,12 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then(responseData => {
         console.log("Resposta da API products:", responseData);
-        
+
         const produtos = responseData?.result?.products
           ? Object.values(responseData.result.products)
           : [];
-          
+
         if (produtos.length > 0) {
-          console.log("Primeiro produto (verificar idioma):");
-          console.log("- Nome:", produtos[0].name);
-          console.log("- Descrição:", produtos[0].description);
           renderProdutos(produtos);
         } else {
           produtosContainer.style.display = "none";
