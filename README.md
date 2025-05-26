@@ -59,7 +59,7 @@ Página para agentes simularem as características de um pet (filtros) e consult
 - **Proxy backend** para requisições autenticadas (configuração mínima), implementado como Vercel Functions
 
 > **Observação:**  
-> Esta solução foi criada sem acesso a ferramentas modernas de desenvolvimento (Git, Node.js ou frameworks front-end). Todo o código foi escrito em HTML, CSS e JavaScript puro, por restrições do ambiente.
+> Esta solução foi criada sem acesso a ferramentas modernas de desenvolvimento (Git, Node.js ou frameworks front-end). Todo o código foi escrito em HTML, CSS e JavaScript puro.
 
 ---
 
