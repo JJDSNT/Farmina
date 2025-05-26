@@ -69,14 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Inicializa
-  loadSpecialCares();
-  petTypeSelect.addEventListener("change", loadSpecialCares);
-  languageSelect.addEventListener("change", loadSpecialCares);
-  careTypeSelect.addEventListener("change", loadSpecialCares);
-
-  document.getElementById('form-simulador').addEventListener('submit', function (e) {
-    e.preventDefault();
+  // Função para buscar produtos (pode ser chamada do submit ou ao trocar idioma)
+  function buscarProdutos() {
     produtosContainer.innerHTML = "";
 
     const form = document.getElementById("form-simulador");
@@ -120,6 +114,23 @@ document.addEventListener("DOMContentLoaded", function () {
         produtosContainer.style.display = "none";
         alert("Erro ao buscar produtos na API: " + err.message);
       });
+  }
+
+  // Inicializa
+  loadSpecialCares();
+  petTypeSelect.addEventListener("change", loadSpecialCares);
+  languageSelect.addEventListener("change", function() {
+    loadSpecialCares();
+    produtosContainer.style.display = "none";
+    produtosContainer.innerHTML = "";
+    // Opcional: para rebuscar produtos automaticamente ao trocar idioma, basta descomentar:
+    // buscarProdutos();
+  });
+  careTypeSelect.addEventListener("change", loadSpecialCares);
+
+  document.getElementById('form-simulador').addEventListener('submit', function (e) {
+    e.preventDefault();
+    buscarProdutos();
   });
 
   function renderProdutos(produtos) {
