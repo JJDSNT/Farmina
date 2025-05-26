@@ -85,6 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
     data.country = country;
     data.languageId = languageId;
 
+    data.appsAndEshop = true;
+    
     console.log("Dados enviados para /api/products:", data);
 
     fetch("/api/products", {
