@@ -1,6 +1,6 @@
 // api/specialcares.js
 
-const { getCountry, getLanguageId, fetchFarminaApi } = require("../lib/farmina");
+const { fetchFarminaApi } = require("../lib/farmina");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -9,10 +9,11 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    // Pegue os valores diretamente do body enviado pelo frontend!
     const payload = {
       species: req.body?.species || "dog",
-      country: getCountry(),
-      languageId: getLanguageId(req),
+      country: req.body?.country || "US",
+      languageId: req.body?.languageId ?? 0,
       type: req.body?.type || "dietetic"
     };
 
@@ -35,4 +36,3 @@ module.exports = async function handler(req, res) {
     res.status(500).json({ error: err.message || "Erro interno." });
   }
 };
-
